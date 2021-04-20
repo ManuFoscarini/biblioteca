@@ -21,7 +21,7 @@ class ControladorEmprestimo():
     def inclui_emprestimo(self):
         dados_emprestimo = self.__tela_emprestimo.pega_dados_emprestimo()
         livro = self.__ctrlBiblioteca.ctrlLivro.retornaLivro(dados_emprestimo["tituloLivro"])
-        usuario = self.__controlador_usuario.retornaUsuario(dados_emprestimo["nomeUsuario"])
+        usuario = self.__ctrlBiblioteca.controladorUsuario.retornaUsuario(dados_emprestimo["nomeUsuario"])
         if livro:
             if usuario:
                 emprestimo = Emprestimo(livro, usuario, DataEmprestimo())
