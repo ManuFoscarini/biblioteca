@@ -1,10 +1,16 @@
 from MVC.View.tela import Tela
+import PySimpleGUI as sg
 
 
 class TelaBiblioteca(Tela):
 
     def __init__(self, controlador):
         super().__init__(controlador)
+        #self.__window = None
+        #self.init_components()
+
+    #def init_components(self):
+
 
     def tela_opcoes(self):
         print("-------- BIBLIOTECA ---------")
