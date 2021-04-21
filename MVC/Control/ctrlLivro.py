@@ -1,4 +1,4 @@
-
+from MVC.Model.livro import Livro
 from MVC.View.telaLivro import TelaLivro
 import shelve
 
@@ -7,9 +7,9 @@ class CtrlLivro():
         self.__ctrlBiblioteca = ctrlBiblioteca
         #self.__telaBiblioteca = TelaBiblioteca(self)
         self.__telaLivro = TelaLivro(self)
-        # self.__livros = [{'titulo': 'Harry Potter', 'autor': 'JK.Rowling', 'editora': 'Livros da Manu'},
-        #                  {'titulo': 'Capitão cueca', 'autor': 'Vitor', 'editora': 'Livros da Manu'},
-        #                  {'titulo': 'Percy Jackson', 'autor': 'Rick Riordan', 'editora': 'Livros da Manu'}]
+        # self.__livros = [Livro('Harry Potter', 'Livros da Manu', 'JK.Rowling'),
+        #                  Livro('Capitão cueca', 'Livros da Manu', 'Vitor'),
+        #                  Livro('Percy Jackson', 'Livros da Manu', 'Rick Riordan')]
         livros_file = shelve.open('livrosFile')
         self.__livros = livros_file['livros']
 
@@ -24,7 +24,7 @@ class CtrlLivro():
 
     def retornaLivro(self, titulo):
         for livro in self.__livros:
-            if livro['titulo'] == titulo:
+            if livro.titulo == titulo:
                 return livro
         return False
 
@@ -32,6 +32,6 @@ class CtrlLivro():
         if len(self.__livros) > 0:
             for livro in self.__livros:
                 self.__telaLivro.mostra_livro(
-                    {'Titulo': livro['titulo'], 'Autor': livro['autor'], 'Editora': livro['editora']})
+                    {'Titulo': livro.titulo, 'Autor': livro.autor, 'Editora': livro.editora})
         else:
             print('Nenhum livro cadastrado.')

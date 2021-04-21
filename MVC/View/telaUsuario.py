@@ -23,24 +23,54 @@ class TelaUsuario(Tela):
         return opcao
 
     def pega_dados_usuario(self):
-        telefone = input("Telefone: ")
-        email = input("E-mail: ")
-        data_entrada = input("Data de Nacimento (no formato DD/MM/AAAA): ")
-        dia, mes, ano = map(int, data_entrada.split('/'))
-        data_nascimento = datetime.date(ano, mes, dia)
-        ano_atual = int(input("Ano atual: "))
+        condicao = True
+        while condicao:
+            try:
+                telefone = input("Telefone: ")
+                if len(telefone) != 11 or not telefone.isdigit():
+                    raise TypeError
+                condicao = False
+            except TypeError:
+                print('Telefone inválido')
+
+        while not condicao:
+            try:
+                email = input("E-mail: ")
+                if '@' not in email or '.' not in email:
+                    raise TypeError
+                condicao = True
+            except TypeError:
+                print('E-mail inválido')
+
+        while condicao:
+            try:
+                data_entrada = input("Data de Nacimento (no formato DD/MM/AAAA): ")
+                dia, mes, ano = map(int, data_entrada.split('/'))
+                data_nascimento = datetime.date(ano, mes, dia)
+                condicao = False
+            except ValueError:
+                print('Data inválida')
+
+        while not condicao:
+            try:
+                ano_atual = int(input("Ano atual: "))
+                if len(str(ano_atual)) != 4:
+                    raise ValueError
+                condicao = True
+            except ValueError:
+                print('Ano inválido')
 
         return {"Telefone": telefone, 'Email': email,
                 'Data de nascimento': data_nascimento, 'Ano atual': ano_atual}
 
-
     def pega_nome(self, tipo: str):
+        usuario = tipo.upper()
+        print("-------- %s ---------" % usuario)
+
         continua = True
         while continua:
-            usuario = tipo.upper()
-            print("-------- %s ---------" % usuario)
             nome = input("Nome: ")
-            continua = any(char.isdigit() for char in nome)
+            continua = any(char.isdigit() for char in nome) or len(nome) < 2
             if continua:
                 print('Digite um nome válido')
 

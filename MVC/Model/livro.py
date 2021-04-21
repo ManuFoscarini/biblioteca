@@ -5,11 +5,10 @@ class Livro:
             titulo: str,
             editora: str,
             autor: str): #apaguei os outros (codigo, capitulos, status) pois não foram implementados
-
         self.__titulo = titulo
         self.__editora = editora
         self.__autor = autor
-        
+
     @property
     def autor(self):
         return self.__autor

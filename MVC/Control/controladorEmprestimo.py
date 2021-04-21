@@ -70,8 +70,8 @@ class ControladorEmprestimo():
 
     def exclui_emprestimo(self): #verificar
         print('Insira o nome do livro que gostaria de excluir o empréstimo.')
-        nome_livro = self.__tela_emprestimo.pega_dados_emprestimo('tituloLivro')
-        livro_existe = self.retornaEmprestimo(nome_livro['tituloLivro'])
+        dados_emprestimo = self.__tela_emprestimo.pega_dados_emprestimo()
+        livro_existe = self.retornaEmprestimo(dados_emprestimo['tituloLivro'])
 
         if livro_existe:
             self.__emprestimo.remove(livro_existe)
