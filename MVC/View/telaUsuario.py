@@ -23,40 +23,38 @@ class TelaUsuario(Tela):
         return opcao
 
     def pega_dados_usuario(self):
-        condicao = True
-        while condicao:
-            try:
-                telefone = input("Telefone: ")
-                if len(telefone) != 11 or not telefone.isdigit():
-                    raise TypeError
-                condicao = False
-            except TypeError:
+
+        continua = True
+        while continua:
+            telefone = input("Telefone: ")
+            continua = len(telefone) != 11 or not telefone.isdigit()
+            if continua:
                 print('Telefone inválido')
 
-        while not condicao:
-            try:
-                email = input("E-mail: ")
-                if '@' not in email or '.' not in email:
-                    raise TypeError
-                condicao = True
-            except TypeError:
+        continua = True
+        while continua:
+            email = input("E-mail: ")
+            continua = '@' not in email or '.' not in email
+            if continua:
                 print('E-mail inválido')
 
-        while condicao:
+        continua = True
+        while continua:
             try:
                 data_entrada = input("Data de Nacimento (no formato DD/MM/AAAA): ")
                 dia, mes, ano = map(int, data_entrada.split('/'))
                 data_nascimento = datetime.date(ano, mes, dia)
-                condicao = False
+                continua = False
             except ValueError:
                 print('Data inválida')
 
-        while not condicao:
+        continua = True
+        while continua:
             try:
                 ano_atual = int(input("Ano atual: "))
                 if len(str(ano_atual)) != 4:
                     raise ValueError
-                condicao = True
+                continua = False
             except ValueError:
                 print('Ano inválido')
 

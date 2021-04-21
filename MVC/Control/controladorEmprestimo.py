@@ -64,18 +64,16 @@ class ControladorEmprestimo():
 
     def retornaEmprestimo(self, tituloLivro):
         for emprestimo in self.__emprestimo:
-                if emprestimo.livro.titulo == tituloLivro:
+                if emprestimo.livro.titulo.upper() == tituloLivro.upper():
                     return emprestimo
         return False
 
     def exclui_emprestimo(self): #verificar
-        print('Insira o nome do livro que gostaria de excluir o empréstimo.')
-        dados_emprestimo = self.__tela_emprestimo.pega_dados_emprestimo()
-        livro_existe = self.retornaEmprestimo(dados_emprestimo['tituloLivro'])
+        titulo_exclusao = self.__tela_emprestimo.pega_titulo_exclusao()
+        livro_emprestimo = self.retornaEmprestimo(titulo_exclusao)
 
-        if livro_existe:
-            self.__emprestimo.remove(livro_existe)
-
+        if livro_emprestimo:
+            self.__emprestimo.remove(livro_emprestimo)
             print("Empréstimo exluído com sucesso.")
         else:
             print("Esse empréstimo não existe!")

@@ -20,9 +20,20 @@ class TelaEmprestimo(Tela):
   def pega_dados_emprestimo(self):
     print("-------- INCLUIR EMPRESTIMO ----------")
     titulo = input("Título do livro: ")
-    usuario = input("Nome de quem irá emprestá-lo: ")
+
+    continua = True
+    while continua:
+      usuario = input("Nome de quem irá emprestá-lo: ")
+      continua = any(char.isdigit() for char in usuario) or len(usuario) < 2
+      if continua:
+        print('Digite um nome válido')
 
     return {"tituloLivro": titulo, "nomeUsuario": usuario}
+
+  def pega_titulo_exclusao(self):
+    print("-------- EXCLUIR EMPRESTIMO ----------")
+    titulo = input("Título do livro que deseja excluir: ")
+    return titulo
 
 
   def mostra_emprestimo(self, dados_emprestimo):

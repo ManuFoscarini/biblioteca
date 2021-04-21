@@ -1,6 +1,4 @@
 from MVC.View.tela import Tela
-import PySimpleGUI as sg
-
 
 class TelaBiblioteca(Tela):
 

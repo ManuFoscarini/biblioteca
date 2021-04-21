@@ -24,7 +24,7 @@ class CtrlLivro():
 
     def retornaLivro(self, titulo):
         for livro in self.__livros:
-            if livro.titulo == titulo:
+            if livro.titulo.upper() == titulo.upper():
                 return livro
         return False
 
