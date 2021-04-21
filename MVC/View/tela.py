@@ -8,7 +8,7 @@ class Tela(ABC):
 
   @property
   def window(self):
-    return self.__window
+    return self.__window #verificar
 
   @abstractmethod
   def tela_opcoes(self):

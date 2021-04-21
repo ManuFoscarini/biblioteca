@@ -1,4 +1,3 @@
-
 from MVC.View.telaLivro import TelaLivro
 import shelve
 
@@ -7,11 +6,15 @@ class CtrlLivro():
         self.__ctrlBiblioteca = ctrlBiblioteca
         #self.__telaBiblioteca = TelaBiblioteca(self)
         self.__telaLivro = TelaLivro(self)
+
         # self.__livros = [Livro('Harry Potter', 'Livros da Manu', 'JK.Rowling'),
-        #                  Livro('Capitão cueca', 'Livros da Manu', 'Vitor'),
-        #                  Livro('Percy Jackson', 'Livros da Manu', 'Rick Riordan')]
-        livros_file = shelve.open('livrosFile')
-        self.__livros = livros_file['livros']
+        #                 Livro('Capitão cueca', 'Livros da Manu', 'Vitor'),
+        #                 Livro('Percy Jackson', 'Livros da Manu', 'Rick Riordan')]
+        livros_file = shelve.open('Livros/livrosFile')
+        self.livros = livros_file['livros'] #deixar a persistência e os files assim?
+        #livros_file['livros'] = self.__livros
+
+        self.lista_livro()
 
     def abre_tela(self):
         while True:
@@ -29,11 +32,11 @@ class CtrlLivro():
         return False
 
     def lista_livro(self):
-         if len(self.__livros) > 0:
-             for livro in self.__livros:
-                 self.__telaLivro.mostra_livro(
-                     {'Titulo': livro.titulo, 'Autor': livro.autor, 'Editora': livro.editora})
-         else:
-             print('Nenhum livro cadastrado.')
-        #self.__telaLivro.lista_livros = self.__livros
+         # if len(self.__livros) > 0:
+         #     for livro in self.__livros:
+         #         self.__telaLivro.mostra_livro(
+         #             {'Titulo': livro.titulo, 'Autor': livro.autor, 'Editora': livro.editora})
+         # else:
+         #     print('Nenhum livro cadastrado.')
+         self.__telaLivro.lista_livros = [1,2,3]
 

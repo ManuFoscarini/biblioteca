@@ -8,7 +8,7 @@ class TelaBiblioteca(Tela):
         self.init_components()
 
     def init_components(self):
-        sg.theme('LightGrey3')
+        sg.theme('LightGrey2')
 
         layout = [
             [sg.Text('Escolha uma opção', justification='center', size=(40, 1))],
