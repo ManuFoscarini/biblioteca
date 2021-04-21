@@ -19,7 +19,15 @@ class TelaUsuario(Tela):
         print("8 - Excluir professor")
         print("0 - Retornar")
 
-        opcao = int(input("Escolha a opcao: "))
+        continua = True
+        while continua:
+            try:
+                opcao = int(input("Escolha a opção: "))
+                if len(str(opcao)) != 1:
+                    raise ValueError
+                continua = False
+            except ValueError:
+                print('Insira uma opção válida')
         return opcao
 
     def pega_dados_usuario(self):
@@ -45,7 +53,7 @@ class TelaUsuario(Tela):
                 dia, mes, ano = map(int, data_entrada.split('/'))
                 data_nascimento = datetime.date(ano, mes, dia)
                 continua = False
-            except ValueError:
+            except ValueError: #falar sobre o Type Error
                 print('Data inválida')
 
         continua = True

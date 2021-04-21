@@ -14,7 +14,15 @@ class TelaEmprestimo(Tela):
     print("4 - Excluir Emprestimo")
     print("0 - Retornar")
 
-    opcao = int(input("Escolha a opcao: "))
+    continua = True
+    while continua:
+      try:
+        opcao = int(input("Escolha a opção: "))
+        if len(str(opcao)) != 1:
+          raise ValueError
+        continua = False
+      except ValueError:
+        print('Insira uma opção válida')
     return opcao
 
   def pega_dados_emprestimo(self):
@@ -35,6 +43,8 @@ class TelaEmprestimo(Tela):
     titulo = input("Título do livro que deseja excluir: ")
     return titulo
 
+  def erro_inclusao(self, erro):
+    print('%s inexistente(s), empréstimo não efetuado' %erro)
 
   def mostra_emprestimo(self, dados_emprestimo):
     print('O livro emprestado é: %s' %(dados_emprestimo["tituloLivro"]))

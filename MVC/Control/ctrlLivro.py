@@ -1,4 +1,4 @@
-from MVC.Model.livro import Livro
+
 from MVC.View.telaLivro import TelaLivro
 import shelve
 
@@ -29,9 +29,11 @@ class CtrlLivro():
         return False
 
     def lista_livro(self):
-        if len(self.__livros) > 0:
-            for livro in self.__livros:
-                self.__telaLivro.mostra_livro(
-                    {'Titulo': livro.titulo, 'Autor': livro.autor, 'Editora': livro.editora})
-        else:
-            print('Nenhum livro cadastrado.')
+         if len(self.__livros) > 0:
+             for livro in self.__livros:
+                 self.__telaLivro.mostra_livro(
+                     {'Titulo': livro.titulo, 'Autor': livro.autor, 'Editora': livro.editora})
+         else:
+             print('Nenhum livro cadastrado.')
+        #self.__telaLivro.lista_livros = self.__livros
+

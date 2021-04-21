@@ -4,6 +4,11 @@ class Tela(ABC):
   @abstractmethod
   def __init__(self, controlador):
     self.__controlador = controlador
+    self.__window = None
+
+  @property
+  def window(self):
+    return self.__window
 
   @abstractmethod
   def tela_opcoes(self):
