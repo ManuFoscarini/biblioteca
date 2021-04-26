@@ -6,6 +6,7 @@ class TelaBiblioteca(Tela):
     def __init__(self, controlador):
         super().__init__(controlador)
         self.init_components()
+        self.__window = None
 
     def init_components(self):
         sg.theme('LightGrey2')
@@ -16,18 +17,14 @@ class TelaBiblioteca(Tela):
             [sg.Button('Usuários', key = 2, size=(40, 1))],
             [sg.Button('Empréstimos', key = 3,  size=(40, 1))]
         ]
-        Tela.window = sg.Window('Biblioteca').Layout(layout)
+        self.__window = sg.Window('Biblioteca').Layout(layout)
 
     def tela_opcoes(self):
-        self.init_components()
-        opcao, values = Tela.window.Read()
+        while True:
+            self.init_components()
+            opcao, values = self.__window.Read()
 
-        if opcao is None:
-            opcao = 0
+            if opcao is None:
+                opcao = 0
 
-        return int(opcao)
-
-
-
-
-
+            return int(opcao)

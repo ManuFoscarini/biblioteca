@@ -53,7 +53,7 @@ class TelaUsuario(Tela):
                 dia, mes, ano = map(int, data_entrada.split('/'))
                 data_nascimento = datetime.date(ano, mes, dia)
                 continua = False
-            except ValueError: #falar sobre o Type Error
+            except ValueError: #Type Error
                 print('Data inválida')
 
         continua = True

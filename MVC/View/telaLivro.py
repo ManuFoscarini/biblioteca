@@ -8,6 +8,15 @@ class TelaLivro(Tela):
         super().__init__(controlador)
         self.__lista_livros = []
         self.init_components()
+        self.__window = None
+
+    # @property
+    # def window(self):
+    #     return self.__window
+    #
+    # @window.setter
+    # def window(self, value):
+    #     self.__window = value
 
     @property
     def lista_livros(self):
@@ -23,19 +32,22 @@ class TelaLivro(Tela):
         # [sg.Column(listaLivros, size=(300,300), scrollable=True)]
         layout = [
             [sg.Listbox(self.__lista_livros, size=(40, 5))], #como mostrar essa lista com dicionário
-            [sg.Button('Retornar', key = 2, size=(40, 1))]
+            [sg.Button('Retornar', key = 1, size=(40, 1))]
         ]
 
-        Tela.window = sg.Window('Livros').Layout(layout)
+        self.__window = sg.Window('Livros').Layout(layout)
 
     def tela_opcoes(self):
         self.init_components()
-        opcao, values = Tela.window.Read()
+        opcao, values = self.__window.Read()
 
         if opcao is None:
-            opcao = 0
+             opcao = 0
 
         return int(opcao)
+
+    def fecha_tela(self):
+        self.__window.Close()
 
     def mostra_livro(self, dados_livro):
         print('-------------------------------------------------')

@@ -28,8 +28,7 @@ class CtrlBiblioteca():
             self.__controladorUsuario.abre_tela()
         elif opcao == 3:
             self.__controladorEmprestimo.abre_tela()
-        elif opcao != 0:
-            self.abre_tela()
+
 
     @property
     def controladorEmprestimo(self):

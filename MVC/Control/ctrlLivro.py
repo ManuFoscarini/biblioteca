@@ -11,32 +11,28 @@ class CtrlLivro():
         #                 Livro('Capitão cueca', 'Livros da Manu', 'Vitor'),
         #                 Livro('Percy Jackson', 'Livros da Manu', 'Rick Riordan')]
         livros_file = shelve.open('Livros/livrosFile')
-        self.livros = livros_file['livros'] #deixar a persistência e os files assim?
+        self.livros = livros_file['livros']
         #livros_file['livros'] = self.__livros
 
         self.lista_livro()
 
     def abre_tela(self):
-        while True:
-            opcao = self.__telaLivro.tela_opcoes()
-            if opcao == 1:
-                self.lista_livro()
-            elif opcao == 0:
-                self.__ctrlBiblioteca.abre_tela()
-                break
+        opcao = self.__telaLivro.tela_opcoes()
+        if opcao == 1:
+            self.__telaLivro.fecha_tela()
 
     def retornaLivro(self, titulo):
-        for livro in self.__livros:
+        for livro in self.livros:
             if livro.titulo.upper() == titulo.upper():
                 return livro
         return False
 
     def lista_livro(self):
-         # if len(self.__livros) > 0:
-         #     for livro in self.__livros:
-         #         self.__telaLivro.mostra_livro(
-         #             {'Titulo': livro.titulo, 'Autor': livro.autor, 'Editora': livro.editora})
-         # else:
-         #     print('Nenhum livro cadastrado.')
-         self.__telaLivro.lista_livros = [1,2,3]
+        lista_livros_tela = []
+        if len(self.livros) > 0:
+            for livro in self.livros:  # compor o dicionário, passar pra tela
+                lista_livros_tela.append(livro.titulo)
+        else:
+            print('Nenhum livro cadastrado.')
+        self.__telaLivro.lista_livros = lista_livros_tela
 

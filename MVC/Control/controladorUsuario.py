@@ -20,7 +20,7 @@ class ControladorUsuario():
         aluno_existe = self.retornaUsuario(nome_aluno['Nome'], 'aluno')
 
         if aluno_existe:
-            print('Esse aluno já existe.')
+            print('Esse aluno já existe.') #raise em uma exceção AlunoJaExisteExeption
         else:
             dados_aluno = self.__telaUsuario.pega_dados_usuario()
             aluno = Aluno(nome_aluno["Nome"], dados_aluno["Telefone"], dados_aluno['Email'],
