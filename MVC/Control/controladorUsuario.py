@@ -2,6 +2,7 @@
 from MVC.View.telaUsuario import TelaUsuario
 from MVC.Model.aluno import Aluno
 from MVC.Model.professor import Professor
+from MVC.Model.alunoDAO import AlunoDAO
 
 
 
@@ -12,6 +13,7 @@ class ControladorUsuario():
         self.__alunos = []
         self.__professores = []
         self.__telaUsuario = TelaUsuario(self)
+        self.__alunoDAO = AlunoDAO(self)
 
 
     # Aluno
@@ -26,10 +28,12 @@ class ControladorUsuario():
             aluno = Aluno(nome_aluno["Nome"], dados_aluno["Telefone"], dados_aluno['Email'],
                           dados_aluno['Data de nascimento'],
                           dados_aluno['Ano atual'])
-            self.__alunos.append(aluno)
+            self.__alunoDAO.add(aluno)
+            #self.__alunos.append(aluno)
             print("Aluno adicionado com sucesso!")
 
     def lista_alunos(self):
+        self.__alunos = self.__alunoDAO.get_all()
         if len(self.__alunos) > 0:
             for aluno in self.__alunos:
                 self.__telaUsuario.mostra_usuario({"Nome": aluno.nome, "Telefone": aluno.telefone, 'Email': aluno.email,
