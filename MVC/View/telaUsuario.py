@@ -1,6 +1,7 @@
 import datetime
 
 from MVC.View.tela import Tela
+from MVC.Model.customExceptions import *
 
 
 class TelaUsuario(Tela):
@@ -34,9 +35,12 @@ class TelaUsuario(Tela):
 
         continua = True
         while continua:
-            telefone = input("Telefone: ")
-            continua = len(telefone) != 11 or not telefone.isdigit()
-            if continua:
+            try:
+                telefone = input("Telefone: ")
+                if not telefone.isdigit() or len(telefone) != 11:
+                    raise InvalidPhoneNumberError(not telefone.isdigit(), len(telefone) != 11)
+                continua = False
+            except InvalidPhoneNumberError:
                 print('Telefone inválido')
 
         continua = True
@@ -53,7 +57,7 @@ class TelaUsuario(Tela):
                 dia, mes, ano = map(int, data_entrada.split('/'))
                 data_nascimento = datetime.date(ano, mes, dia)
                 continua = False
-            except ValueError: #Type Error
+            except ValueError:  # Type Error
                 print('Data inválida')
 
         continua = True
@@ -75,9 +79,12 @@ class TelaUsuario(Tela):
 
         continua = True
         while continua:
-            nome = input("Nome: ")
-            continua = any(char.isdigit() for char in nome) or len(nome) < 2
-            if continua:
+            try:
+                nome = input("Nome: ")
+                if any(char.isdigit() for char in nome) or len(nome) < 2:
+                    raise InvalidNameError(any(char.isdigit() for char in nome), len(nome) < 2)
+                continua = False
+            except InvalidNameError:
                 print('Digite um nome válido')
 
         return {"Nome": nome}

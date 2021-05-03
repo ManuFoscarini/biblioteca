@@ -1,6 +1,4 @@
-import pickle
 from DAO import DAO
-from aluno import Aluno
 
 class AlunoDAO(DAO):
     def __init__(self):

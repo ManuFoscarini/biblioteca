@@ -3,7 +3,6 @@ from MVC.Model.aluno import Aluno
 from MVC.Model.professor import Professor
 from MVC.Model.alunoDAO import AlunoDAO
 
-
 class ControladorUsuario():
 
     def __init__(self, ctrlBiblioteca):
