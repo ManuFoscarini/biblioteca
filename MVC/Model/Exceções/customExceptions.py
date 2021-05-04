@@ -3,3 +3,6 @@ class InvalidNameError(Exception):
 
 class InvalidPhoneNumberError(Exception): #herdar de exeption
     pass
+
+class AlunoJaExisteExeption(Exception):
+    pass

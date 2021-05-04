@@ -1,7 +1,8 @@
 from MVC.View.telaUsuario import TelaUsuario
 from MVC.Model.aluno import Aluno
 from MVC.Model.professor import Professor
-from MVC.Model.alunoDAO import AlunoDAO
+from MVC.Model.DAO.alunoDAO import AlunoDAO
+from MVC.Model.Exceções.customExceptions import *
 
 class ControladorUsuario():
 
@@ -25,7 +26,7 @@ class ControladorUsuario():
         aluno_existe = self.retornaUsuario(nome_aluno['Nome'], 'aluno')
 
         if aluno_existe:
-            print('Esse aluno já existe.')  # raise em uma exceção AlunoJaExisteExeption - tratar no ctrl na hr q abrir a tela
+            raise AlunoJaExisteExeption
         else:
             dados_aluno = self.__telaUsuario.pega_dados_usuario()
             aluno = Aluno(nome_aluno["Nome"], dados_aluno["Telefone"], dados_aluno['Email'],
@@ -145,7 +146,10 @@ class ControladorUsuario():
         while True:
             opcao = self.__telaUsuario.tela_opcoes()
             if opcao == 1:
-                self.incluir_aluno()
+                try:
+                    self.incluir_aluno()
+                except AlunoJaExisteExeption:
+                    print('Esse aluno já existe.')
             elif opcao == 2:
                 self.altera_aluno()
             elif opcao == 3:

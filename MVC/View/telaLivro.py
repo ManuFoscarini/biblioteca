@@ -10,13 +10,13 @@ class TelaLivro(Tela):
         self.init_components()
         self.__window = None
 
-    # @property
-    # def window(self):
-    #     return self.__window
-    #
-    # @window.setter
-    # def window(self, value):
-    #     self.__window = value
+    @property
+    def window(self):
+        return self.__window
+
+    @window.setter
+    def window(self, value):
+       self.__window = value
 
     @property
     def lista_livros(self):

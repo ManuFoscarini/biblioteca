@@ -1,4 +1,4 @@
-from MVC.Model.customExceptions import InvalidNameError
+from MVC.Model.Exceções.customExceptions import InvalidNameError
 from MVC.View.tela import Tela
 
 

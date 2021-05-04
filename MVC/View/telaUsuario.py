@@ -1,7 +1,7 @@
 import datetime
 
 from MVC.View.tela import Tela
-from MVC.Model.customExceptions import *
+from MVC.Model.Exceções.customExceptions import *
 
 
 class TelaUsuario(Tela):

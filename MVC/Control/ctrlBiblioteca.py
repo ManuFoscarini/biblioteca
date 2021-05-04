@@ -21,14 +21,17 @@ class CtrlBiblioteca():
         return self.__controladorUsuario
 
     def abre_tela(self):
-        opcao = self.__telaBiblioteca.tela_opcoes()
-        if opcao == 1:
-            self.__ctrlLivro.abre_tela()
-        elif opcao == 2:
-            self.__controladorUsuario.abre_tela()
-        elif opcao == 3:
-            self.__controladorEmprestimo.abre_tela()
-
+        while True:
+            opcao = self.__telaBiblioteca.tela_opcoes()
+            self.__telaBiblioteca.fecha_tela()
+            if opcao == 1:
+                self.__ctrlLivro.abre_tela()
+            elif opcao == 2:
+                self.__controladorUsuario.abre_tela()
+            elif opcao == 3:
+                self.__controladorEmprestimo.abre_tela()
+            elif opcao == 0:
+                break
 
     @property
     def controladorEmprestimo(self):
