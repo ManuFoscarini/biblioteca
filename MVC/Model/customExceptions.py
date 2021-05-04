@@ -1,5 +1,5 @@
-class InvalidNameError:
+class InvalidNameError(Exception):
     pass
 
-class InvalidPhoneNumberError:
+class InvalidPhoneNumberError(Exception): #herdar de exeption
     pass

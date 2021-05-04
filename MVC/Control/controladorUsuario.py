@@ -13,11 +13,11 @@ class ControladorUsuario():
 
         # self.__alunos = list(self.__alunoDAO.get_all())
 
-        alunos = self.__alunoDAO.get('alunos')
-        if alunos is not None:
-            self.__alunos = alunos
-        else:
-            self.__alunos =[]
+        # alunos = self.__alunoDAO.get('alunos')
+        # if alunos is not None:
+        #     self.__alunos = alunos
+        # else:
+        #     self.__alunos =[]
 
     # Aluno
     def incluir_aluno(self):
@@ -25,19 +25,19 @@ class ControladorUsuario():
         aluno_existe = self.retornaUsuario(nome_aluno['Nome'], 'aluno')
 
         if aluno_existe:
-            print('Esse aluno já existe.')  # raise em uma exceção AlunoJaExisteExeption
+            print('Esse aluno já existe.')  # raise em uma exceção AlunoJaExisteExeption - tratar no ctrl na hr q abrir a tela
         else:
             dados_aluno = self.__telaUsuario.pega_dados_usuario()
             aluno = Aluno(nome_aluno["Nome"], dados_aluno["Telefone"], dados_aluno['Email'],
                           dados_aluno['Data de nascimento'],
                           dados_aluno['Ano atual'])
-            self.__alunos.append(aluno)
-            # self.__alunoDAO.add(aluno)
-            self.__alunoDAO.add(self.__alunos)
+            # self.__alunos.append(aluno)
+            self.__alunoDAO.add(aluno)
+            # self.__alunoDAO.add(self.__alunos)
 
     def lista_alunos(self):
-        if len(self.__alunos) > 0:
-            for aluno in self.__alunos:
+        if len(self.__alunoDAO.get_all()) > 0:
+            for aluno in self.__alunoDAO.get_all():
                 self.__telaUsuario.mostra_usuario({"Nome": aluno.nome, "Telefone": aluno.telefone, 'Email': aluno.email,
                                                    'Data de nascimento': aluno.data_nascimento,
                                                    'Ano atual': aluno.ano_atual}, 'Aluno')
@@ -46,7 +46,7 @@ class ControladorUsuario():
 
     def retornaUsuario(self, nome, tipo='ambos'):
         if tipo != 'professor':
-            for aluno in self.__alunos:
+            for aluno in self.__alunoDAO.get_all():
                 if aluno.nome == nome:
                     return aluno
         if tipo != 'aluno':
@@ -62,14 +62,15 @@ class ControladorUsuario():
 
         if aluno_existe:
             dados_aluno = self.__telaUsuario.pega_dados_usuario()
-            index = self.__alunos.index(aluno_existe)
-            self.__alunos[index].nome = nome_aluno["Nome"]
-            self.__alunos[index].telefone = dados_aluno["Telefone"]
-            self.__alunos[index].email = dados_aluno['Email']
-            self.__alunos[index].data_nascimento = dados_aluno['Data de nascimento']
-            self.__alunos[index].ano_atual = dados_aluno['Ano atual']
+            aluno_alterar = self.__alunoDAO.get(dados_aluno['Nome'])
+            # index = self.__alunos.index(aluno_existe) #add com a chave
+            aluno_alterar.nome = nome_aluno["Nome"]
+            aluno_alterar.telefone = dados_aluno["Telefone"]
+            aluno_alterar.email = dados_aluno['Email']
+            aluno_alterar.data_nascimento = dados_aluno['Data de nascimento']
+            aluno_alterar.ano_atual = dados_aluno['Ano atual']
 
-            self.__alunoDAO.add(self.__alunos)
+            self.__alunoDAO.add(aluno_alterar)
 
             print("Aluno alterado com sucesso.")
         else:

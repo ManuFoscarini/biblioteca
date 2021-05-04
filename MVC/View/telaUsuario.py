@@ -38,7 +38,7 @@ class TelaUsuario(Tela):
             try:
                 telefone = input("Telefone: ")
                 if not telefone.isdigit() or len(telefone) != 11:
-                    raise InvalidPhoneNumberError(not telefone.isdigit(), len(telefone) != 11)
+                    raise InvalidPhoneNumberError(not telefone.isdigit(), len(telefone) != 11) #tela
                 continua = False
             except InvalidPhoneNumberError:
                 print('Telefone inválido')
