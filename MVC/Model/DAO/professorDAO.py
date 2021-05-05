@@ -8,7 +8,7 @@ class ProfessorDAO(DAO):
 
     def add(self, professor: Professor):
         if (isinstance(professor.nome, str)) and (professor is not None):
-            super().add(professor.nome, Professor)
+            super().add(professor.nome, professor)
 
     # def add(self, alunos):
     #     super().add('alunos', alunos)

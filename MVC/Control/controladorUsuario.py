@@ -1,8 +1,10 @@
+from MVC.Model.DAO.professorDAO import ProfessorDAO
 from MVC.View.telaUsuario import TelaUsuario
 from MVC.Model.aluno import Aluno
 from MVC.Model.professor import Professor
 from MVC.Model.DAO.alunoDAO import AlunoDAO
 from MVC.Model.Exceções.customExceptions import *
+
 
 class ControladorUsuario():
 
@@ -11,34 +13,24 @@ class ControladorUsuario():
         self.__professores = []
         self.__telaUsuario = TelaUsuario(self)
         self.__alunoDAO = AlunoDAO()
+        self.__professorDAO = ProfessorDAO()
 
-        # self.__alunos = list(self.__alunoDAO.get_all())
-
-        # alunos = self.__alunoDAO.get('alunos')
-        # if alunos is not None:
-        #     self.__alunos = alunos
-        # else:
-        #     self.__alunos =[]
-
-    # Aluno
     def incluir_aluno(self):
         nome_aluno = self.__telaUsuario.pega_nome('Aluno')
         aluno_existe = self.retornaUsuario(nome_aluno['Nome'], 'aluno')
 
         if aluno_existe:
-            raise AlunoJaExisteExeption
+            raise UsuarioJaExisteExeption
         else:
             dados_aluno = self.__telaUsuario.pega_dados_usuario()
-            aluno = Aluno(nome_aluno["Nome"], dados_aluno["Telefone"], dados_aluno['Email'],
-                          dados_aluno['Data de nascimento'],
-                          dados_aluno['Ano atual'])
-            # self.__alunos.append(aluno)
-            self.__alunoDAO.add(aluno)
-            # self.__alunoDAO.add(self.__alunos)
+            self.__alunoDAO.add(Aluno(nome_aluno["Nome"], dados_aluno["Telefone"], dados_aluno['Email'],
+                                      dados_aluno['Data de nascimento'],
+                                      dados_aluno['Ano atual']))
 
     def lista_alunos(self):
-        if len(self.__alunoDAO.get_all()) > 0:
-            for aluno in self.__alunoDAO.get_all():
+        lista_alunos = self.__alunoDAO.get_all()
+        if len(lista_alunos) > 0:
+            for aluno in lista_alunos:
                 self.__telaUsuario.mostra_usuario({"Nome": aluno.nome, "Telefone": aluno.telefone, 'Email': aluno.email,
                                                    'Data de nascimento': aluno.data_nascimento,
                                                    'Ano atual': aluno.ano_atual}, 'Aluno')
@@ -47,9 +39,9 @@ class ControladorUsuario():
 
     def retornaUsuario(self, nome, tipo='ambos'):
         if tipo != 'professor':
-            for aluno in self.__alunoDAO.get_all():
-                if aluno.nome == nome:
-                    return aluno
+            aluno = self.__alunoDAO.get(nome)
+            if aluno is not None:
+                return aluno
         if tipo != 'aluno':
             for professor in self.__professores:
                 if professor.nome == nome:
@@ -63,8 +55,8 @@ class ControladorUsuario():
 
         if aluno_existe:
             dados_aluno = self.__telaUsuario.pega_dados_usuario()
-            aluno_alterar = self.__alunoDAO.get(dados_aluno['Nome'])
-            # index = self.__alunos.index(aluno_existe) #add com a chave
+            aluno_alterar = aluno_existe
+
             aluno_alterar.nome = nome_aluno["Nome"]
             aluno_alterar.telefone = dados_aluno["Telefone"]
             aluno_alterar.email = dados_aluno['Email']
@@ -83,17 +75,13 @@ class ControladorUsuario():
         aluno_existe = self.retornaUsuario(nome_aluno['Nome'], 'aluno')
 
         if aluno_existe:
-            self.__alunos.remove(aluno_existe)
-
-            # self.__alunoDAO.remove(nome_aluno)
-            self.__alunoDAO.add(self.__alunos)
-
+            self.__alunoDAO.remove(aluno_existe.nome)
             print("Aluno exluído com sucesso.")
         else:
             print("Esse aluno não existe!")
 
     # Professor
-    def incluir_professor(self):  # aplicar Try except
+    def incluir_professor(self):
         nome_professor = self.__telaUsuario.pega_nome('Professor')
         professor_existe = self.retornaUsuario(nome_professor['Nome'], 'professor')
 
@@ -148,7 +136,7 @@ class ControladorUsuario():
             if opcao == 1:
                 try:
                     self.incluir_aluno()
-                except AlunoJaExisteExeption:
+                except UsuarioJaExisteExeption:
                     print('Esse aluno já existe.')
             elif opcao == 2:
                 self.altera_aluno()

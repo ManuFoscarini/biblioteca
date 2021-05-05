@@ -4,7 +4,7 @@ class Livro:
             self,
             titulo: str,
             editora: str,
-            autor: str): #apaguei os outros (codigo, capitulos, status) pois não foram implementados
+            autor: str):
         self.__titulo = titulo
         self.__editora = editora
         self.__autor = autor
