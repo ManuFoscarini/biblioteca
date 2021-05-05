@@ -4,7 +4,7 @@ from MVC.Model.professor import Professor
 
 class ProfessorDAO(DAO):
     def __init__(self):
-        super().__init__('alunos.pkl')
+        super().__init__('professor.pkl')
 
     def add(self, professor: Professor):
         if (isinstance(professor.nome, str)) and (professor is not None):
