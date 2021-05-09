@@ -27,7 +27,7 @@ class ControladorEmprestimo():
         if livro:
             if usuario:
                 emprestimo = Emprestimo(livro, usuario, DataEmprestimo())
-                self.__emprestimo.append(emprestimo)
+                self.__emprestimoDAO.add(emprestimo)
             else:
                 self.__tela_emprestimo.erro_inclusao('Usuário')
         elif usuario:

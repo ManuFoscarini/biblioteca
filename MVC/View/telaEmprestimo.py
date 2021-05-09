@@ -50,7 +50,7 @@ class TelaEmprestimo(Tela):
             if opcao is None:
                 opcao = 0
 
-            return int(opcao)
+            return (opcao)
 
 
     def fecha_tela(self):

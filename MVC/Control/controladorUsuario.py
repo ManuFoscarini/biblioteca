@@ -56,10 +56,9 @@ class ControladorUsuario():
             if aluno is not None:
                 return aluno
         if tipo != 'aluno':
-            for professor in self.__professores:
-                if professor.nome == nome:
-                    return professor
-        return False
+            professor = self.__professorDAO.get(nome)
+            if professor is not None:
+                return professor
 
     def altera_aluno(self):
         print('Insira o nome do aluno que gostaria de alterar.')
