@@ -1,5 +1,5 @@
 import datetime
-
+import PySimpleGUI as sg
 from MVC.View.tela import Tela
 from MVC.Model.Exceções.customExceptions import *
 
@@ -7,29 +7,57 @@ from MVC.Model.Exceções.customExceptions import *
 class TelaUsuario(Tela):
     def __init__(self, controlador):
         super().__init__(controlador)
+        self.__lista_alunos = []
+        self.init_components()
+        self.__window = None
+
+    @property
+    def window(self):
+        return self.__window
+
+    @window.setter
+    def window(self, value):
+        self.__window = value
+
+    @property
+    def lista_alunos(self):
+        return self.__lista_alunos
+
+    @lista_alunos.setter
+    def lista_alunos(self, value):
+        self.__lista_alunos = value
+
+    def init_components(self):
+        sg.theme('LightGrey3')
+
+        layout = [
+            [sg.Text('Escolha uma opção', justification='center', size=(40, 1))],
+            [sg.Radio('Aluno', "RADIO1", default=False, size=(10, 1)), sg.Radio('Professor', "RADIO2",)],
+            [sg.Listbox(self.__lista_alunos, size=(40, 5))],
+            [sg.InputText('Nome')],
+            [sg.InputText('Telefone')],
+            [sg.InputText('E-mail')],
+            [sg.InputText('Data de nascimento')],
+            [sg.InputText('Ano atual')],
+            [sg.Button('Incluir', key=1, size=(40, 1))],
+            [sg.Button('Alterar', key=2, size=(40, 1))],
+            [sg.Button('Excluir', key=3, size=(40, 1))],
+            [sg.Button('Retornar', key=4, size=(40, 1))]
+        ]
+        self.__window = sg.Window('Usuário').Layout(layout)
 
     def tela_opcoes(self):
-        print("-------- USUÁRIOS ----------")
-        print("1 - Incluir aluno")
-        print("2 - Alterar aluno")
-        print("3 - Listar alunos")
-        print("4 - Excluir aluno")
-        print("5 - Incluir professor")
-        print("6 - Alterar professor")
-        print("7 - Listar professor")
-        print("8 - Excluir professor")
-        print("0 - Retornar")
+        while True:
+            self.init_components()
+            opcao, values = self.__window.Read()
 
-        continua = True
-        while continua:
-            try:
-                opcao = int(input("Escolha a opção: "))
-                if len(str(opcao)) != 1:
-                    raise ValueError
-                continua = False
-            except ValueError:
-                print('Insira uma opção válida')
-        return opcao
+            if opcao is None:
+                opcao = 0
+
+            return {'opcao': int(opcao), 'values': values}
+
+    def fecha_tela(self):
+        self.__window.Close()
 
     def pega_dados_usuario(self):
 

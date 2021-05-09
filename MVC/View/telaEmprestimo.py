@@ -1,30 +1,43 @@
 from MVC.Model.Exceções.customExceptions import InvalidNameError
 from MVC.View.tela import Tela
-
+import PySimpleGUI as sg
 
 class TelaEmprestimo(Tela):
     def __init__(self, controlador):
         super().__init__(controlador)
 
-    def tela_opcoes(self):
-        print("-------- Emprestimos ----------")
-        print("Escolha a opcao")
-        print("1 - Incluir Emprestimo")
-        print("2 - Renovar Emprestimo")
-        print("3 - Relatório de Emprestimos")
-        print("4 - Excluir Emprestimo")
-        print("0 - Retornar")
+        self.init_components()
+        self.__window = None
 
-        continua = True
-        while continua:
-            try:
-                opcao = int(input("Escolha a opção: "))
-                if len(str(opcao)) != 1:
-                    raise ValueError
-                continua = False
-            except ValueError:
-                print('Insira uma opção válida')
-        return opcao
+
+    def init_components(self):
+        sg.theme('LightGrey3')
+
+        layout = [
+            [sg.Text('Escolha uma opção', justification='center', size=(40, 1))],
+            [sg.Button('Incluir', key=1, size=(40, 1))],
+            [sg.Button('Renovar', key=2, size=(40, 1))],
+            [sg.Button('Listar', key=3, size=(40, 1))],
+            [sg.Button('Excluir', key=4, size=(40, 1))],
+            [sg.Button('Retornar', key=0, size=(40, 1))]
+
+        ]
+        self.__window = sg.Window('Empréstimo').Layout(layout)
+
+
+    def tela_opcoes(self):
+        while True:
+            self.init_components()
+            opcao, values = self.__window.Read()
+
+            if opcao is None:
+                opcao = 0
+
+            return int(opcao)
+
+
+    def fecha_tela(self):
+        self.__window.Close()
 
     def pega_dados_emprestimo(self):
         print("-------- INCLUIR EMPRESTIMO ----------")

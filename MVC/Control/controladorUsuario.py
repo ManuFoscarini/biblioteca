@@ -15,27 +15,28 @@ class ControladorUsuario():
         self.__alunoDAO = AlunoDAO()
         self.__professorDAO = ProfessorDAO()
 
-    def incluir_aluno(self):
-        nome_aluno = self.__telaUsuario.pega_nome('Aluno')
-        aluno_existe = self.retornaUsuario(nome_aluno['Nome'], 'aluno')
+        self.lista_alunos()
+
+    def incluir_aluno(self, nome, telefone, email, data_nascimento, ano_atual):
+        #nome_aluno = self.__telaUsuario.pega_nome('Aluno')
+        aluno_existe = self.retornaUsuario(nome, 'aluno')
 
         if aluno_existe:
             raise UsuarioJaExisteExeption
         else:
-            dados_aluno = self.__telaUsuario.pega_dados_usuario()
-            self.__alunoDAO.add(Aluno(nome_aluno["Nome"], dados_aluno["Telefone"], dados_aluno['Email'],
-                                      dados_aluno['Data de nascimento'],
-                                      dados_aluno['Ano atual']))
+            self.__alunoDAO.add(Aluno(nome, telefone, email, data_nascimento, ano_atual))
 
     def lista_alunos(self):
-        lista_alunos = self.__alunoDAO.get_all()
-        if len(lista_alunos) > 0:
-            for aluno in lista_alunos:
+        alunos_dict_value = self.__alunoDAO.get_all()
+        lista_alunos = []
+        if len(alunos_dict_value) > 0:
+            for aluno in alunos_dict_value:
                 self.__telaUsuario.mostra_usuario({"Nome": aluno.nome, "Telefone": aluno.telefone, 'Email': aluno.email,
                                                    'Data de nascimento': aluno.data_nascimento,
                                                    'Ano atual': aluno.ano_atual}, 'Aluno')
         else:
             print('Nenhum aluno cadastrado.')
+        self.__telaUsuario.lista_alunos = lista_alunos
 
     def retornaUsuario(self, nome, tipo='ambos'):
         if tipo != 'professor':
@@ -115,7 +116,7 @@ class ControladorUsuario():
             print("Esse professor não existe!")
 
     def altera_professor(self):
-        print('Insira o nome do aluno que gostaria de alterar.')
+        print('Insira o nome do professor que gostaria de alterar.')
         nome_professor = self.__telaUsuario.pega_nome('Professor')
         professor_existe = self.retornaUsuario(nome_professor['Nome'], 'professor')
         if professor_existe:
@@ -134,32 +135,43 @@ class ControladorUsuario():
         else:
             print("Esse professor não existe!")
 
-
     def abre_tela(self):
-        while True:
-            opcao = self.__telaUsuario.tela_opcoes()
-            if opcao == 1:
-                try:
-                    self.incluir_aluno()
-                except UsuarioJaExisteExeption:
-                    return('Esse aluno já existe.')
-            elif opcao == 2:
-                self.altera_aluno()
-            elif opcao == 3:
-                self.lista_alunos()
-            elif opcao == 4:
-                self.exclui_aluno()
-            elif opcao == 5:
-                try:
-                    self.incluir_professor()
-                except UsuarioJaExisteExeption:
-                    return('Esse professor já existe.')
-            elif opcao == 6:
-                self.altera_professor()
-            elif opcao == 7:
-                self.lista_professores()
-            elif opcao == 8:
-                self.exclui_professor()
-            elif opcao == 0:
-                self.__ctrlBiblioteca.abre_tela()
-                break
+        dict_usuario = self.__telaUsuario.tela_opcoes()
+        opcao = dict_usuario['opcao']
+        print(opcao)
+        values = dict_usuario['values']
+        print(values)
+        if opcao == 10:
+            if values[0] == True:
+                self.incluir_aluno(values[3], values[4], values[5], values[6], values[7])
+        else:
+            self.__telaUsuario.fecha_tela()
+
+
+    # def abre_tela(self):
+    #     while True:
+    #         opcao = self.__telaUsuario.tela_opcoes()
+    #         if opcao == 1:
+    #             try:
+    #                 self.incluir_aluno()
+    #             except UsuarioJaExisteExeption:
+    #                 return('Esse aluno já existe.')
+    #         elif opcao == 2:
+    #             self.altera_aluno()
+    #         elif opcao == 3:
+    #             self.lista_alunos()
+    #         # elif opcao == 4:
+    #         #     self.exclui_aluno()
+    #         elif opcao == 5:
+    #             try:
+    #                 self.incluir_professor()
+    #             except UsuarioJaExisteExeption:
+    #                 return('Esse professor já existe.')
+    #         elif opcao == 6:
+    #             self.altera_professor()
+    #         elif opcao == 7:
+    #             self.lista_professores()
+    #         elif opcao == 8:
+    #             self.exclui_professor()
+    #         elif opcao == 4:
+    #             self.__telaUsuario.fecha_tela()

@@ -1,7 +1,7 @@
 class InvalidNameError(Exception):
     pass
 
-class InvalidPhoneNumberError(Exception): #herdar de exeption
+class InvalidPhoneNumberError(Exception):
     pass
 
 class UsuarioJaExisteExeption(Exception):

@@ -10,9 +10,6 @@ class ProfessorDAO(DAO):
         if (isinstance(professor.nome, str)) and (professor is not None):
             super().add(professor.nome, professor)
 
-    # def add(self, alunos):
-    #     super().add('alunos', alunos)
-
     def get(self, key: str):
         if isinstance(key, str):
             return super().get(key)

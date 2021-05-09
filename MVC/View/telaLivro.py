@@ -29,10 +29,10 @@ class TelaLivro(Tela):
     def init_components(self):
         sg.theme('LightGrey3')
 
-        # [sg.Column(listaLivros, size=(300,300), scrollable=True)]
+
         layout = [
             [sg.Listbox(self.__lista_livros, size=(40, 5))],
-            [sg.Button('Retornar', key = 1, size=(40, 1))]
+            [sg.Button('Retornar', key=1, size=(40, 1))]
         ]
 
         self.__window = sg.Window('Livros').Layout(layout)

@@ -7,11 +7,9 @@ class AlunoDAO(DAO):
         super().__init__('alunos.pkl')
 
     def add(self, aluno: Aluno):
-        if (isinstance(aluno.nome, str)) and (aluno is not None):  # and isinstance(aluno, Aluno):
-            super().add(aluno.nome, aluno) #tava a classe
+        if (isinstance(aluno.nome, str)) and (aluno is not None):
+            super().add(aluno.nome, aluno)
 
-    # def add(self, alunos):
-    #     super().add('alunos', alunos)
 
     def get(self, key: str):
         if isinstance(key, str):

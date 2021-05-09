@@ -1,3 +1,4 @@
+from MVC.Model.DAO.emprestimoDAO import EmprestimoDAO
 from MVC.Model.emprestimo import Emprestimo
 from MVC.Control.ctrlLivro import CtrlLivro
 from MVC.Control.controladorUsuario import ControladorUsuario
@@ -16,6 +17,7 @@ class ControladorEmprestimo():
         self.__controlador_livro = CtrlLivro(self)
         self.__controlador_usuario = ControladorUsuario(self)
         self.__data_emprestimo = DataEmprestimo()
+        self.__emprestimoDAO = EmprestimoDAO()
 
 
     def inclui_emprestimo(self):
@@ -90,5 +92,5 @@ class ControladorEmprestimo():
             elif opcao == 4:
                 self.exclui_emprestimo()
             elif opcao == 0:
-                self.__ctrlBiblioteca.abre_tela()
-                break
+                self.__tela_emprestimo.fecha_tela()
+
