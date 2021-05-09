@@ -31,30 +31,32 @@ class TelaUsuario(Tela):
         sg.theme('LightGrey3')
 
         layout = [
-            [sg.Text('Escolha uma opção', justification='center', size=(40, 1))],
-            [sg.Radio('Aluno', "RADIO1", default=False, size=(10, 1)), sg.Radio('Professor', "RADIO2",)],
-            [sg.Listbox(self.__lista_alunos, size=(40, 5))],
-            [sg.InputText('')],
-            [sg.InputText('Telefone')],
-            [sg.InputText('E-mail')],
-            [sg.InputText('Data de nascimento')],
-            [sg.InputText('Ano atual')],
-            [sg.Button('Incluir', key=1, size=(40, 1))],
-            [sg.Button('Alterar', key=2, size=(40, 1))],
-            [sg.Button('Excluir', key=3, size=(40, 1))],
-            [sg.Button('Retornar', key=4, size=(40, 1))]
+            [sg.Text('Escolha uma opção', justification='center', size=(56, 1))],
+            [sg.Radio('Aluno', "RADIO1", default=True, size=(20, 2)), sg.Radio('Professor', "RADIO1")],
+            [sg.Listbox(self.__lista_alunos, size=(62, 5))],
+            [sg.Text('Nome:', size=(15, 1)), sg.InputText()],
+            [sg.Text('Telefone:', size=(15, 1)), sg.InputText()],
+            [sg.Text('E-mail:', size=(15, 1)), sg.InputText()],
+            [sg.Text('Data de nascimento:', size=(15, 1)), sg.InputText()],
+            [sg.Text('Ano atual:', size=(15, 1)), sg.InputText()],
+            [sg.Button('Incluir', size=(56, 1))],
+            [sg.Button('Alterar', key=2, size=(56, 1))],
+            [sg.Button('Excluir', key=3, size=(56, 1))],
+            [sg.Button('Retornar', key=4, size=(56, 1))]
         ]
         self.__window = sg.Window('Usuário').Layout(layout)
 
     def tela_opcoes(self):
+
         while True:
             self.init_components()
             opcao, values = self.__window.Read()
-
+            print(opcao)
             if opcao is None:
                 opcao = 0
 
-            return {'opcao': int(opcao), 'values': values}
+
+            return {'opcao': opcao, 'values': values}
 
     def fecha_tela(self):
         self.__window.Close()

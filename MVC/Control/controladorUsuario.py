@@ -35,8 +35,8 @@ class ControladorUsuario():
                 raise UsuarioJaExisteExeption
             else:
                 self.__alunoDAO.add(Aluno(nome, telefone, email, data_nascimento, ano_atual))
-        else:
-            raise DadosInvalidoUsuario
+        #else:
+            #raise DadosInvalidoUsuario
 
     def lista_alunos(self):
         alunos_dict_value = self.__alunoDAO.get_all()
@@ -153,12 +153,11 @@ class ControladorUsuario():
         print(opcao)
         values = dict_usuario['values']
         print(values)
-        if opcao == 10:
+        if opcao == 'Incluir':
             if values[0] == True:
                 self.incluir_aluno(values[3], values[4], values[5], values[6], values[7])
         else:
             self.__telaUsuario.fecha_tela()
-
 
     # def abre_tela(self):
     #     while True:

@@ -5,21 +5,38 @@ import PySimpleGUI as sg
 class TelaEmprestimo(Tela):
     def __init__(self, controlador):
         super().__init__(controlador)
-
+        self.__lista_emprestimo = []
         self.init_components()
         self.__window = None
 
+    @property
+    def window(self):
+        return self.__window
+
+    @window.setter
+    def window(self, value):
+        self.__window = value
+
+    @property
+    def lista_emprestimo(self):
+        return self.__lista_emprestimo
+
+    @lista_emprestimo.setter
+    def lista_emprestimo(self, value):
+        self.__lista_emprestimo = value
 
     def init_components(self):
         sg.theme('LightGrey3')
 
         layout = [
-            [sg.Text('Escolha uma opção', justification='center', size=(40, 1))],
-            [sg.Button('Incluir', key=1, size=(40, 1))],
-            [sg.Button('Renovar', key=2, size=(40, 1))],
-            [sg.Button('Listar', key=3, size=(40, 1))],
-            [sg.Button('Excluir', key=4, size=(40, 1))],
-            [sg.Button('Retornar', key=0, size=(40, 1))]
+            [sg.Text('Escolha uma opção', justification='center', size=(56, 1))],
+            [sg.Listbox(self.__lista_emprestimo, size=(62, 5))],
+            [sg.Text('Título do livro:', size=(15, 1)), sg.InputText()],
+            [sg.Text('Nome do usuário:', size=(15, 1)), sg.InputText()],
+            [sg.Button('Incluir', size=(56, 1))],
+            [sg.Button('Renovar', key=2, size=(56, 1))],
+            [sg.Button('Excluir', key=3, size=(56, 1))],
+            [sg.Button('Retornar', key=4, size=(56, 1))]
 
         ]
         self.__window = sg.Window('Empréstimo').Layout(layout)

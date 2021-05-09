@@ -81,7 +81,6 @@ class ControladorEmprestimo():
             print("Esse empréstimo não existe!")
 
     def abre_tela(self):
-        while True:
             opcao = self.__tela_emprestimo.tela_opcoes()
             if opcao == 1:
                 self.inclui_emprestimo()
@@ -91,6 +90,6 @@ class ControladorEmprestimo():
                 self.lista_emprestimos()
             elif opcao == 4:
                 self.exclui_emprestimo()
-            elif opcao == 0:
+            else:
                 self.__tela_emprestimo.fecha_tela()
 
