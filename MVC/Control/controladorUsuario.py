@@ -1,9 +1,12 @@
+import datetime
+
 from MVC.Model.DAO.professorDAO import ProfessorDAO
 from MVC.View.telaUsuario import TelaUsuario
 from MVC.Model.aluno import Aluno
 from MVC.Model.professor import Professor
 from MVC.Model.DAO.alunoDAO import AlunoDAO
 from MVC.Model.Exceções.customExceptions import *
+
 
 
 class ControladorUsuario():
@@ -14,17 +17,26 @@ class ControladorUsuario():
         self.__telaUsuario = TelaUsuario(self)
         self.__alunoDAO = AlunoDAO()
         self.__professorDAO = ProfessorDAO()
-
+        dia, mes, ano = map(int, '25/01/2001'.split('/'))
+        data_nascimento = datetime.date(ano, mes, dia)
+        self.__alunoDAO.add(Aluno('Manu', '99999999999', 'manu@.', data_nascimento, 2021))
         self.lista_alunos()
+
+    def valida_dados(self, nome, telefone, email, data_nascimento, ano_atual):
+        pass
 
     def incluir_aluno(self, nome, telefone, email, data_nascimento, ano_atual):
         #nome_aluno = self.__telaUsuario.pega_nome('Aluno')
-        aluno_existe = self.retornaUsuario(nome, 'aluno')
+        dados_validos = self.valida_dados(nome, telefone, email, data_nascimento, ano_atual)
+        if dados_validos:
+            aluno_existe = self.retornaUsuario(nome, 'aluno')
 
-        if aluno_existe:
-            raise UsuarioJaExisteExeption
+            if aluno_existe:
+                raise UsuarioJaExisteExeption
+            else:
+                self.__alunoDAO.add(Aluno(nome, telefone, email, data_nascimento, ano_atual))
         else:
-            self.__alunoDAO.add(Aluno(nome, telefone, email, data_nascimento, ano_atual))
+            raise DadosInvalidoUsuario
 
     def lista_alunos(self):
         alunos_dict_value = self.__alunoDAO.get_all()

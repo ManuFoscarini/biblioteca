@@ -34,7 +34,7 @@ class TelaUsuario(Tela):
             [sg.Text('Escolha uma opção', justification='center', size=(40, 1))],
             [sg.Radio('Aluno', "RADIO1", default=False, size=(10, 1)), sg.Radio('Professor', "RADIO2",)],
             [sg.Listbox(self.__lista_alunos, size=(40, 5))],
-            [sg.InputText('Nome')],
+            [sg.InputText('')],
             [sg.InputText('Telefone')],
             [sg.InputText('E-mail')],
             [sg.InputText('Data de nascimento')],
@@ -60,11 +60,11 @@ class TelaUsuario(Tela):
         self.__window.Close()
 
     def pega_dados_usuario(self):
-
         continua = True
         while continua:
             try:
                 telefone = input("Telefone: ")
+
                 if not telefone.isdigit() or len(telefone) != 11:
                     raise InvalidPhoneNumberError(not telefone.isdigit(), len(telefone) != 11) #tela
                 continua = False

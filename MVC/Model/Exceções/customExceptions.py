@@ -6,3 +6,6 @@ class InvalidPhoneNumberError(Exception):
 
 class UsuarioJaExisteExeption(Exception):
     pass
+
+class DadosInvalidoUsuario(Exception):
+    pass
