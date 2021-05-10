@@ -27,8 +27,10 @@ class CtrlBiblioteca():
             if opcao == 1:
                 self.__ctrlLivro.abre_tela()
             elif opcao == 2:
-                self.__controladorUsuario.abre_tela()
+                self.__controladorUsuario.abre_tela_aluno()
             elif opcao == 3:
+                self.__controladorUsuario.abre_tela_professor()
+            elif opcao == 4:
                 self.__controladorEmprestimo.abre_tela()
             elif opcao == 0:
                 break

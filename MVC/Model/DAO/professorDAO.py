@@ -8,12 +8,12 @@ class ProfessorDAO(DAO):
 
     def add(self, professor: Professor):
         if (isinstance(professor.nome, str)) and (professor is not None):
-            super().add(professor.nome, professor)
+            super().add(professor.nome + '1', professor)
 
     def get(self, key: str):
         if isinstance(key, str):
-            return super().get(key)
+            return super().get(key + '1')
 
     def remove(self, key: str):
         if isinstance(key, str):
-            return super().remove(key)
+            return super().remove(key + '1')

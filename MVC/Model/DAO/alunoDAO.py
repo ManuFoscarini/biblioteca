@@ -8,13 +8,12 @@ class AlunoDAO(DAO):
 
     def add(self, aluno: Aluno):
         if (isinstance(aluno.nome, str)) and (aluno is not None):
-            super().add(aluno.nome, aluno)
-
+            super().add(aluno.nome + '0', aluno)
 
     def get(self, key: str):
         if isinstance(key, str):
-            return super().get(key)
-    
+            return super().get(key + '0')
+
     def remove(self, key: str):
         if isinstance(key, str):
-            return super().remove(key)
+            return super().remove(key + '0')

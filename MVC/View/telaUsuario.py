@@ -1,14 +1,13 @@
-import datetime
 import PySimpleGUI as sg
 from MVC.View.tela import Tela
-from MVC.Model.Exceções.customExceptions import *
 
 
 class TelaUsuario(Tela):
-    def __init__(self, controlador):
+    def __init__(self, controlador, lista_usuarios, texto_acao, tipo):
         super().__init__(controlador)
-        self.__lista_alunos = []
-        self.__texto_acao = 'Escolha uma opção'
+        self.__lista_usuarios = lista_usuarios
+        self.__texto_acao = texto_acao
+        self.__tipo = tipo
         self.init_components()
         self.__window = None
 
@@ -21,12 +20,12 @@ class TelaUsuario(Tela):
         self.__window = value
 
     @property
-    def lista_alunos(self):
-        return self.__lista_alunos
+    def lista_usuarios(self):
+        return self.__lista_usuarios
 
-    @lista_alunos.setter
-    def lista_alunos(self, value):
-        self.__lista_alunos = value
+    @lista_usuarios.setter
+    def lista_usuarios(self, value):
+        self.__lista_usuarios = value
 
     @property
     def texto_acao(self):
@@ -40,9 +39,8 @@ class TelaUsuario(Tela):
         sg.theme('LightGrey3')
 
         layout = [
-            [sg.Text('Escolha uma opção', justification='center', size=(56, 1))],
-            [sg.Radio('Aluno', "RADIO1", default=True, size=(20, 2)), sg.Radio('Professor', "RADIO1")],
-            [sg.Listbox(self.__lista_alunos, size=(62, 5))],
+            [sg.Text('Lista de ' + self.__tipo, size=(56, 1))],
+            [sg.Listbox(self.__lista_usuarios, size=(62, 5))],
             [sg.Text(self.__texto_acao, justification='center', size=(61, 1))],
             [sg.Text('Nome:', size=(15, 1)), sg.InputText()],
             [sg.Text('Telefone:', size=(15, 1)), sg.InputText()],
