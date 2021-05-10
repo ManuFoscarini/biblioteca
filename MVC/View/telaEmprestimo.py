@@ -40,13 +40,13 @@ class TelaEmprestimo(Tela):
         layout = [
             [sg.Text('Emprestimos [Título - Usuário - Data inicial - Data final]', size=(45, 1)), ],
             [sg.Listbox(self.__lista_emprestimos, size=(60, 5))],
-            [sg.Text('Título do livro:', size=(15, 1)), sg.InputText()],
-            [sg.Text('Nome do usuário:', size=(15, 1)), sg.InputText()],
-            [sg.Text(self.__texto_acao, justification='center', size=(61, 1))],
-            [sg.Button('Incluir', size=(61, 1))],
-            [sg.Button('Renovar', size=(61, 1))],
-            [sg.Button('Excluir', size=(61, 1))],
-            [sg.Button('Retornar', size=(61, 1))]
+            [sg.Text('Título do livro:', size=(13, 1)), sg.InputText()],
+            [sg.Text('Nome do usuário:', size=(13, 1)), sg.InputText()],
+            [sg.Text(self.__texto_acao, justification='center', size=(53, 1))],
+            [sg.Button('Incluir', size=(53, 1))],
+            [sg.Button('Renovar', size=(53, 1))],
+            [sg.Button('Excluir', size=(53, 1))],
+            [sg.Button('Retornar', size=(53, 1))]
 
         ]
         self.__window = sg.Window('Empréstimo').Layout(layout)

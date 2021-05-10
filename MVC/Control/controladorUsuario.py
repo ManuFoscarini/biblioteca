@@ -1,6 +1,7 @@
 import datetime
 
 from MVC.Model.DAO.professorDAO import ProfessorDAO
+from MVC.View.telaAluno import TelaAluno
 from MVC.View.telaProfessor import TelaProfessor
 from MVC.Model.aluno import Aluno
 from MVC.Model.professor import Professor
@@ -13,6 +14,7 @@ class ControladorUsuario():
     def __init__(self, ctrlBiblioteca):
         self.__ctrlBiblioteca = ctrlBiblioteca
         self.__telaProfessor = TelaProfessor(self)
+        self.__telaAluno = TelaAluno(self)
         self.__alunoDAO = AlunoDAO()
         self.__professorDAO = ProfessorDAO()
 
@@ -70,7 +72,7 @@ class ControladorUsuario():
         else:
             self.__alunoDAO.add(
                 Aluno(nome, telefone, email, dados_validos['data_nascimento'], dados_validos['ano_atual']))
-            self.retorna_notificacao('Aluno incluído com sucesso!')
+            self.retorna_notificacao_tela_aluno('Aluno incluído com sucesso!')
 
     def lista_alunos(self):
         alunos_dict_value = self.__alunoDAO.get_all()
@@ -82,7 +84,7 @@ class ControladorUsuario():
                         "%d/%m/%Y") + ' - ' + str(aluno.ano_atual))
         else:
             lista_alunos.append('Nenhum aluno cadastrado.')
-        self.__telaUsuario.lista_alunos = lista_alunos
+        self.__telaAluno.lista_usuarios = lista_alunos
 
     def altera_aluno(self, nome, telefone, email, data_nascimento, ano_atual):
         dados_validos = self.valida_dados(nome, telefone, email, data_nascimento, ano_atual)
@@ -91,7 +93,7 @@ class ControladorUsuario():
         if aluno_existe:
             self.__alunoDAO.add(
                 Aluno(nome, telefone, email, dados_validos['data_nascimento'], dados_validos['ano_atual']))
-            self.retorna_notificacao('Aluno alterado com sucesso!')
+            self.retorna_notificacao_tela_aluno('Aluno alterado com sucesso!')
         else:
             raise UsuarioNaoExisteExeption
 
@@ -101,7 +103,7 @@ class ControladorUsuario():
         aluno_existe = self.retornaUsuario(nome, 'aluno')
         if aluno_existe:
             self.__alunoDAO.remove(aluno_existe.nome)
-            self.retorna_notificacao("Aluno exluído com sucesso.")
+            self.retorna_notificacao_tela_aluno("Aluno exluído com sucesso.")
         else:
             raise UsuarioNaoExisteExeption
 
@@ -117,7 +119,7 @@ class ControladorUsuario():
             print('incluiu')
             self.__professorDAO.add(
                 Professor(nome, telefone, email, dados_validos['data_nascimento'], dados_validos['ano_atual']))
-            self.retorna_notificacao('Professor incluído com sucesso!')
+            self.retorna_notificacao_tela_professor('Professor incluído com sucesso!')
 
     def lista_professores(self):
         professor_dict_value = self.__professorDAO.get_all()
@@ -137,7 +139,7 @@ class ControladorUsuario():
         professor_existe = self.retornaUsuario(nome, 'professor')
         if professor_existe:
             self.__professorDAO.remove(professor_existe.nome)
-            self.retorna_notificacao("Professor exluído com sucesso.")
+            self.retorna_notificacao_tela_professor("Professor exluído com sucesso.")
         else:
             raise UsuarioNaoExisteExeption
 
@@ -148,7 +150,7 @@ class ControladorUsuario():
         if professor_existe:
             self.__professorDAO.add(
                 Professor(nome, telefone, email, dados_validos['data_nascimento'], dados_validos['ano_atual']))
-            self.retorna_notificacao('Professor alterado com sucesso!')
+            self.retorna_notificacao_tela_professor('Professor alterado com sucesso!')
         else:
             raise UsuarioNaoExisteExeption
 
@@ -164,25 +166,25 @@ class ControladorUsuario():
                     self.incluir_professor(values[1], values[2], values[3], values[4], values[5])
                 except (InvalidNameError, UsuarioJaExisteExeption, InvalidPhoneNumberError) as error:
                     if error == InvalidNameError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
                     elif error is UsuarioJaExisteExeption:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Esse professor já existe, tente alterá-lo')
                     elif error is InvalidPhoneNumberError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um telefone válido, composto de exatamente 11 digitos numéricos')
                     elif error is InvalidEmailError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um e-mail válido, contendo "@" e "."')
                     elif error is InvalidDateError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite uma data válida, no formato "DD/MM/YYYY"')
                     elif error is InvalidYearError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um ano válido, composto de exatamente 4 digitos numéricos')
                     else:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Não foi possível incluir este professor')
             elif opcao == 'Alterar':
                 try:
@@ -190,107 +192,107 @@ class ControladorUsuario():
                 except (InvalidNameError, UsuarioJaExisteExeption, InvalidPhoneNumberError) as e:
                     print('entrou nas exceptions')
                     if e is InvalidNameError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
                     elif e is UsuarioNaoExisteExeption:
-                        self.retorna_notificacao('Esse professor não existe!')
+                        self.retorna_notificacao_tela_professor('Esse professor não existe!')
                     elif e is InvalidPhoneNumberError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um telefone válido, composto de exatamente 11 digitos numéricos')
                     elif e is InvalidEmailError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um e-mail válido, contendo "@" e "."')
                     elif e is InvalidDateError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite uma data válida, no formato "DD/MM/YYYY"')
                     elif e is InvalidYearError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um ano válido, composto de exatamente 4 digitos numéricos')
                     else:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Não foi possível alterar este professor')
             elif opcao == 'Excluir':
                 try:
                     self.exclui_professor(values[1])
                 except (InvalidNameError, UsuarioNaoExisteExeption) as e:
                     if e is InvalidNameError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
                     elif e is UsuarioNaoExisteExeption:
-                        self.retorna_notificacao('Esse professor não existe!')
+                        self.retorna_notificacao_tela_professor('Esse professor não existe!')
                     else:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_professor(
                             'Não foi possível excluir este professor')
             else:
                 break
 
     def abre_tela_aluno(self):
         while True:
-            self.lista_professores()
-            dict_usuario = self.__telaProfessor.tela_opcoes()
+            self.lista_alunos()
+            dict_usuario = self.__telaAluno.tela_opcoes()
             opcao = dict_usuario['opcao']
             values = dict_usuario['values']
 
             if opcao == 'Incluir':
                 try:
-                    self.incluir_professor(values[1], values[2], values[3], values[4], values[5])
+                    self.incluir_aluno(values[1], values[2], values[3], values[4], values[5])
                 except (InvalidNameError, UsuarioJaExisteExeption, InvalidPhoneNumberError) as error:
                     if error == InvalidNameError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
                     elif error is UsuarioJaExisteExeption:
-                        self.retorna_notificacao(
-                            'Esse professor já existe, tente alterá-lo')
+                        self.retorna_notificacao_tela_aluno(
+                            'Esse aluno já existe, tente alterá-lo')
                     elif error is InvalidPhoneNumberError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um telefone válido, composto de exatamente 11 digitos numéricos')
                     elif error is InvalidEmailError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um e-mail válido, contendo "@" e "."')
                     elif error is InvalidDateError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite uma data válida, no formato "DD/MM/YYYY"')
                     elif error is InvalidYearError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um ano válido, composto de exatamente 4 digitos numéricos')
                     else:
-                        self.retorna_notificacao(
-                            'Não foi possível incluir este professor')
+                        self.retorna_notificacao_tela_aluno(
+                            'Não foi possível incluir este aluno')
             elif opcao == 'Alterar':
                 try:
-                    self.altera_professor(values[1], values[2], values[3], values[4], values[5])
+                    self.altera_aluno(values[1], values[2], values[3], values[4], values[5])
                 except (InvalidNameError, UsuarioJaExisteExeption, InvalidPhoneNumberError) as e:
                     if e is InvalidNameError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
                     elif e is UsuarioNaoExisteExeption:
-                        self.retorna_notificacao('Esse professor não existe!')
+                        self.retorna_notificacao_tela_aluno('Esse aluno não existe!')
                     elif e is InvalidPhoneNumberError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um telefone válido, composto de exatamente 11 digitos numéricos')
                     elif e is InvalidEmailError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um e-mail válido, contendo "@" e "."')
                     elif e is InvalidDateError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite uma data válida, no formato "DD/MM/YYYY"')
                     elif e is InvalidYearError():
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um ano válido, composto de exatamente 4 digitos numéricos')
                     else:
-                        self.retorna_notificacao(
-                            'Não foi possível alterar este professor')
+                        self.retorna_notificacao_tela_aluno(
+                            'Não foi possível alterar este aluno')
             elif opcao == 'Excluir':
                 try:
-                    self.exclui_professor(values[1])
+                    self.exclui_aluno(values[1])
                 except (InvalidNameError, UsuarioNaoExisteExeption) as e:
                     if e is InvalidNameError:
-                        self.retorna_notificacao(
+                        self.retorna_notificacao_tela_aluno(
                             'Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
                     elif e is UsuarioNaoExisteExeption:
-                        self.retorna_notificacao('Esse professor não existe!')
+                        self.retorna_notificacao_tela_aluno('Esse aluno não existe!')
                     else:
-                        self.retorna_notificacao(
-                            'Não foi possível excluir este professor')
+                        self.retorna_notificacao_tela_aluno(
+                            'Não foi possível excluir este aluno')
             else:
                 break

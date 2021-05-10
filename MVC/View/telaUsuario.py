@@ -39,18 +39,18 @@ class TelaUsuario(Tela):
         sg.theme('LightGrey3')
 
         layout = [
-            [sg.Text('Lista de ' + self.__tipo, size=(56, 1))],
+            [sg.Text('Lista de ' + self.__tipo, size=(40, 1))],
             [sg.Listbox(self.__lista_usuarios, size=(62, 5))],
-            [sg.Text(self.__texto_acao, justification='center', size=(61, 1))],
+            [sg.Text(self.__texto_acao, justification='center', size=(55, 1))],
             [sg.Text('Nome:', size=(15, 1)), sg.InputText()],
             [sg.Text('Telefone:', size=(15, 1)), sg.InputText()],
             [sg.Text('E-mail:', size=(15, 1)), sg.InputText()],
             [sg.Text('Data de nascimento:', size=(15, 1)), sg.InputText()],
             [sg.Text('Ano atual:', size=(15, 1)), sg.InputText()],
-            [sg.Button('Incluir', size=(61, 1))],
-            [sg.Button('Alterar', size=(61, 1))],
-            [sg.Button('Excluir', size=(61, 1))],
-            [sg.Button('Retornar', size=(61, 1))]
+            [sg.Button('Incluir', size=(55, 1))],
+            [sg.Button('Alterar', size=(55, 1))],
+            [sg.Button('Excluir', size=(55, 1))],
+            [sg.Button('Retornar', size=(55, 1))]
         ]
         self.__window = sg.Window('Usuário').Layout(layout)
 
