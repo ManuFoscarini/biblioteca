@@ -76,7 +76,7 @@ class ControladorEmprestimo():
             else:
                 self.retorna_notificacao('Esse empréstimo ainda não foi criado.')
         else:
-            self.retorna_notificacao('Digite um nome válido')
+            self.retorna_notificacao('Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
 
     def retornaEmprestimo(self, titulo_livro, nome_usuario):
         emprestimo = self.__emprestimoDAO.get(titulo_livro + nome_usuario)
@@ -95,7 +95,7 @@ class ControladorEmprestimo():
             else:
                 self.retorna_notificacao('Esse empréstimo não existe!')
         else:
-            self.retorna_notificacao('Digite um nome válido')
+            self.retorna_notificacao('Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
 
     def abre_tela(self):
         while True:
