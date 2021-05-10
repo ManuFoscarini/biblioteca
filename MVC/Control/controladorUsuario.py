@@ -165,7 +165,7 @@ class ControladorUsuario():
                 try:
                     self.incluir_professor(values[1], values[2], values[3], values[4], values[5])
                 except (InvalidNameError, UsuarioJaExisteExeption, InvalidPhoneNumberError) as error:
-                    if error == InvalidNameError:
+                    if error is InvalidNameError:
                         self.retorna_notificacao_tela_professor(
                             'Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
                     elif error is UsuarioJaExisteExeption:
@@ -237,7 +237,7 @@ class ControladorUsuario():
                 try:
                     self.incluir_aluno(values[1], values[2], values[3], values[4], values[5])
                 except (InvalidNameError, UsuarioJaExisteExeption, InvalidPhoneNumberError) as error:
-                    if error == InvalidNameError:
+                    if error is InvalidNameError:
                         self.retorna_notificacao_tela_aluno(
                             'Digite um nome válido, com no mínimo dois caracteres (apenas letras)')
                     elif error is UsuarioJaExisteExeption:
