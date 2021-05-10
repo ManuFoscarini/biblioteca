@@ -19,7 +19,7 @@ class ControladorUsuario():
     def retorna_notificacao_tela_professor(self, mensagem):
         self.__telaProfessor.texto_acao = mensagem
 
-     def retorna_notificacao_tela_aluno(self, mensagem):
+    def retorna_notificacao_tela_aluno(self, mensagem):
         self.__telaAluno.texto_acao = mensagem
 
     def retornaUsuario(self, nome, tipo='ambos'):
