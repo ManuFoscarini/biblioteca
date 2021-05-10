@@ -104,59 +104,49 @@ class ControladorUsuario():
             raise UsuarioNaoExisteExeption
 
     # Professor
-    def incluir_professor(self):
-        nome_professor = self.__telaUsuario.pega_nome('Professor')
-        professor_existe = self.retornaUsuario(nome_professor['Nome'], 'professor')
+    def incluir_professor(self, nome, telefone, email, data_nascimento, ano_atual):
+        dados_validos = self.valida_dados(nome, telefone, email, data_nascimento, ano_atual)
 
+        professor_existe = self.retornaUsuario(nome, 'professor')
         if professor_existe:
             raise UsuarioJaExisteExeption
         else:
-            dados_professor = self.__telaUsuario.pega_dados_usuario()
             self.__professorDAO.add(
-                Professor(nome_professor["Nome"], dados_professor["Telefone"], dados_professor['Email'],
-                          dados_professor['Data de nascimento'],
-                          dados_professor['Ano atual']))
+                Professor(nome, telefone, email, dados_validos['data_nascimento'], dados_validos['ano_atual']))
+            self.retorna_notificacao('Professor incluído com sucesso!')
 
     def lista_professores(self):
-        lista_professores = self.__professorDAO.get_all()
-        if len(lista_professores) > 0:
-            for professor in lista_professores:
-                self.__telaUsuario.mostra_usuario(
-                    {"Nome": professor.nome, "Telefone": professor.telefone, 'Email': professor.email,
-                     'Data de nascimento': professor.data_nascimento, 'Ano atual': professor.ano_atual}, 'Professor')
+        professor_dict_value = self.__professorDAO.get_all()
+        lista_professores = []
+        if len(professor_dict_value) > 0:
+            for professor in professor_dict_value:
+                lista_professores.append(
+                    professor.nome + ' - ' + professor.telefone + ' - ' + professor.email + ' - ' + professor.data_nascimento.strftime(
+                        "%d/%m/%Y") + ' - ' + str(professor.ano_atual))
         else:
-            print('Nenhum professor cadastrado.')
+            lista_professores.append('Nenhum professor cadastrado.')
 
-    def exclui_professor(self):
-        print('Insira o nome do professor que gostaria de excluir.')
-        nome_professor = self.__telaUsuario.pega_nome('Professor')
-        professor_existe = self.retornaUsuario(nome_professor['Nome'], 'professor')
+    def exclui_professor(self, nome):
+        self.valida_nome(nome)
 
+        professor_existe = self.retornaUsuario(nome, 'professor')
         if professor_existe:
             self.__professorDAO.remove(professor_existe.nome)
-            print("Professor exluído com sucesso.")
+            self.retorna_notificacao("Professor exluído com sucesso.")
         else:
-            print("Esse professor não existe!")
+            raise UsuarioNaoExisteExeption
 
-    def altera_professor(self):
-        print('Insira o nome do professor que gostaria de alterar.')
-        nome_professor = self.__telaUsuario.pega_nome('Professor')
-        professor_existe = self.retornaUsuario(nome_professor['Nome'], 'professor')
+
+    def altera_professor(self, nome, telefone, email, data_nascimento, ano_atual):
+        dados_validos = self.valida_dados(nome, telefone, email, data_nascimento, ano_atual)
+
+        professor_existe = self.retornaUsuario(nome, 'professor')
         if professor_existe:
-            dados_professor = self.__telaUsuario.pega_dados_usuario()
-            professor_alterar = professor_existe
-
-            professor_alterar.nome = nome_professor["Nome"]
-            professor_alterar.telefone = dados_professor["Telefone"]
-            professor_alterar.email = dados_professor['Email']
-            professor_alterar.data_nascimento = dados_professor['Data de nascimento']
-            professor_alterar.ano_atual = dados_professor['Ano atual']
-
-            self.__professorDAO.add(professor_alterar)
-
-            print("Professor alterado com sucesso.")
+            self.__professorDAO.add(
+                Professor(nome, telefone, email, dados_validos['data_nascimento'], dados_validos['ano_atual']))
+            self.retorna_notificacao('Professor alterado com sucesso!')
         else:
-            print("Esse professor não existe!")
+            raise UsuarioNaoExisteExeption
 
     def abre_tela(self):
         while True:
